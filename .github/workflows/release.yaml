@@ -1,36 +1,54 @@
-name: Build Rust Binary
+name: Build and Release Rust Binaries
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - 'v*.*.*'
 
 jobs:
   build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - x86_64-unknown-linux-gnu
+          - aarch64-unknown-linux-gnu
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install cross
+        run: cargo install cross
+
+      - name: Build for ${{ matrix.target }}
+        run: cross build --release --target ${{ matrix.target }}
+
+      - name: Upload binary as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.target }}-binary
+          path: target/${{ matrix.target }}/release/notation
+
+  release:
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Rust
-        uses: actions-rs/toolchain@v1
+      - name: Download x86_64 binary
+        uses: actions/download-artifact@v3
         with:
-          toolchain: stable
-          profile: minimal
+          name: x86_64-unknown-linux-gnu-binary
+          path: ./artifacts/x86_64
 
-      - name: Cache Cargo registry
-        uses: actions/cache@v3
+      - name: Download aarch64 binary
+        uses: actions/download-artifact@v3
         with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-
-
-      - name: Build
-        run: cargo build --release
+          name: aarch64-unknown-linux-gnu-binary
+          path: ./artifacts/aarch64
 
       - name: Create GitHub release
         id: create_release
@@ -43,12 +61,22 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Upload release asset
+      - name: Upload x86_64 binary to release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: target/release/notation
-          asset_name: notation
+          asset_path: ./artifacts/x86_64/your_binary_name
+          asset_name: notation-x86_64
+          asset_content_type: application/octet-stream
+
+      - name: Upload aarch64 binary to release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./artifacts/aarch64/your_binary_name
+          asset_name: notation-aarch64
           asset_content_type: application/octet-stream
