@@ -1,0 +1,4 @@
+[notion]
+secret = ""
+# this is the title of the page that will host your new documentation
+parent_page = ""
