@@ -18,9 +18,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Openssl
-        run: sudo apt update && sudo apt install -y libssl-dev pkg-config
-
       - name: Install cross
         run: cargo install cross
 
