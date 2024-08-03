@@ -1,4 +1,4 @@
-name: Build and Release Rust Binaries
+name: Build and Release (mac)
 
 on:
   release:
