@@ -17,11 +17,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install cross
-        run: cargo install cross
+      - name: Install target for aarch64-apple-darwin
+        run: rustup target add aarch64-apple-darwin
+
+      - name: Install target for x86_64-unknown-linux-gnu
+        run: rustup target add x86_64-unknown-linux-gnu
 
       - name: Build for ${{ matrix.target }}
-        run: cross build --release --target ${{ matrix.target }}
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        run: cargo build --release --target ${{ matrix.target }}
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
