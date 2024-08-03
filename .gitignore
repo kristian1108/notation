@@ -1,4 +1,4 @@
 /target
 src/bin/scratch.rs
 .idea/
-Notation.toml
+/Notation.toml

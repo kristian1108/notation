@@ -1,9 +1,8 @@
 name: Build and Release Rust Binaries
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
+  release:
+    types: [created]
 
 jobs:
   build:
@@ -24,62 +23,10 @@ jobs:
       - name: Build for ${{ matrix.target }}
         run: cross build --release --target ${{ matrix.target }}
 
-      - name: Upload binary as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.target }}-binary
-          path: target/${{ matrix.target }}/release/notation
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Download x86_64 binary
-        uses: actions/download-artifact@v3
-        with:
-          name: x86_64-unknown-linux-gnu-binary
-          path: ./artifacts/x86_64
-
-      - name: Download aarch64 binary
-        uses: actions/download-artifact@v3
-        with:
-          name: aarch64-unknown-linux-gnu-binary
-          path: ./artifacts/aarch64
-
-      - name: Create GitHub release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-
-      - name: Upload x86_64 binary to release
+      - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./artifacts/x86_64/your_binary_name
-          asset_name: notation-x86_64
-          asset_content_type: application/octet-stream
-
-      - name: Upload aarch64 binary to release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./artifacts/aarch64/your_binary_name
-          asset_name: notation-aarch64
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: target/${{ matrix.target }}/release/notation
+          asset_name: notation-${{ matrix.target }}
           asset_content_type: application/octet-stream
