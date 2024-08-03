@@ -22,8 +22,8 @@ rpath = false
 anyhow = "1.0.86"
 config = "0.14.0"
 markdown = "=1.0.0-alpha.17"
-reqwest = { version = "0.12.4", features = ["json"] }
-tokio = { version = "1.38.0", features = ["full"] }
+reqwest = { version = "0.12", features = ["json"] }
+tokio = { version = "1", features = ["full"] }
 serde = { version = "1.0.203", features = ["derive"] }
 serde_json = "1.0.117"
 glob = "0.3.1"
