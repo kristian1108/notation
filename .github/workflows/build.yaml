@@ -10,32 +10,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install target for aarch64-apple-darwin
-        run: rustup target add aarch64-apple-darwin
-
-      - name: Install target for x86_64-unknown-linux-gnu
-        run: rustup target add x86_64-unknown-linux-gnu
-
-      - name: Install dependencies
-        run: sudo apt-get install -y cmake clang llvm
-
-      - name: Set up osxcross
-        run: |
-          git clone https://github.com/tpoechtrager/osxcross.git
-          cd osxcross
-          wget https://github.com/tpoechtrager/osxcross/releases/download/v0.1/tarballs-macOS-10.15-SDK-19A487m.tar.xz
-          mv tarballs-macOS-10.15-SDK-19A487m.tar.xz tarballs/
-          UNATTENDED=yes OSX_VERSION_MIN=10.7 ./build.sh
-          echo 'export PATH="$PWD/target/bin:$PATH"' >> $GITHUB_ENV
-
-      - name: Build project
-        run: |
-          export CC=o64-clang
-          export CXX=o64-clang++
-          cargo build --release --target aarch64-apple-darwin
+      - name: Build
+        run: cargo build --release
