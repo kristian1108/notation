@@ -1,4 +1,4 @@
-name: Build and Release Rust Binaries
+name: Build Rust Binaries
 
 on:
   pull_request:
@@ -11,15 +11,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        target:
-          - x86_64-unknown-linux-gnu
-          - aarch64-apple-darwin
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Set up Rust
+        uses: actions/setup-rust@v1
+        with:
+          rust-version: 'stable'
 
       - name: Install target for aarch64-apple-darwin
         run: rustup target add aarch64-apple-darwin
@@ -27,8 +27,20 @@ jobs:
       - name: Install target for x86_64-unknown-linux-gnu
         run: rustup target add x86_64-unknown-linux-gnu
 
-      - name: Update Rust
-        run: rustup update
+      - name: Install dependencies
+        run: sudo apt-get install -y cmake clang llvm
 
-      - name: Build for ${{ matrix.target }}
-        run: cargo build --release --target ${{ matrix.target }}
+      - name: Set up osxcross
+        run: |
+          git clone https://github.com/tpoechtrager/osxcross.git
+          cd osxcross
+          wget https://github.com/tpoechtrager/osxcross/releases/download/v0.1/tarballs-macOS-10.15-SDK-19A487m.tar.xz
+          mv tarballs-macOS-10.15-SDK-19A487m.tar.xz tarballs/
+          UNATTENDED=yes OSX_VERSION_MIN=10.7 ./build.sh
+          echo 'export PATH="$PWD/target/bin:$PATH"' >> $GITHUB_ENV
+
+      - name: Build project
+        run: |
+          export CC=o64-clang
+          export CXX=o64-clang++
+          cargo build --release --target aarch64-apple-darwin
