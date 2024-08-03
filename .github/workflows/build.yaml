@@ -1,0 +1,34 @@
+name: Build and Release Rust Binaries
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - x86_64-unknown-linux-gnu
+          - aarch64-apple-darwin
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install target for aarch64-apple-darwin
+        run: rustup target add aarch64-apple-darwin
+
+      - name: Install target for x86_64-unknown-linux-gnu
+        run: rustup target add x86_64-unknown-linux-gnu
+
+      - name: Update Rust
+        run: rustup update
+
+      - name: Build for ${{ matrix.target }}
+        run: cargo build --release --target ${{ matrix.target }}
