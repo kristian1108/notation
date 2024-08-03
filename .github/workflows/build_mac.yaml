@@ -1,0 +1,23 @@
+name: Build (mac)
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install target for aarch64-apple-darwin
+        run: rustup target add aarch64-apple-darwin
+
+      - name: Build
+        run: cargo build --release --target aarch64-apple-darwin
