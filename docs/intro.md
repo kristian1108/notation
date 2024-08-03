@@ -15,7 +15,7 @@ I do not want to deploy a website.
 ### 4 — Some people are not engineers. They should be able to read my docs.
 Users, product mommies, etc.
 
-### 5 — Docs should be searchable. 
+### 5 — Docs should be highly searchable. 
 Good search is a hard problem so better let someone else worry about that.
 
 ### 6 — Documentation should be subject to the same review & CI process as code.
@@ -37,7 +37,12 @@ The website you're reading right now is managed by Notation.
 3. Grab an API key from Notion (help below)
 4. Throw that API key in a `Notation.toml` file (detail below)
 5. Run `notation ship --src </path/to/you/docs>`
+6. See your documentation in Notion. Use built-in AI search, nice formatting, table on contents on the right, etc
 
+# Deployment
+1. Keep your documentation internal to your own Notion workspace for your team.
+2. Ship it as a Notion page [like this](https://private-marmot-67c.notion.site/Notation-2e4180aa275f43f5bd0ef5169cf3ccdc).
+3. Deploy it as a full-on website with [super.so](https://super.so), for example: [notation.so](https://notation.so).
 
 # FAQ
 ### What markdown features do you support?
@@ -63,7 +68,7 @@ secret = ""
 parent_page = ""    
 ```
 
-### How do I prep my Notion account to use Notation?
+### How do I set all this up?
 First, you need to have a notion account. Sign up here: [Notion](https://www.notion.so/)
 
 Next, you need to create a page to host your documentation.
@@ -74,7 +79,7 @@ Now, give that page a name:
 
 ![](https://notation-media.s3.amazonaws.com/notation_parent_name.jpg)
 
-Finally, in your `Notation.toml` file, just write down this name (make sure it's a unique name within your space):
+In your `Notation.toml` file, just write down this name (make sure it's a unique name within your space):
 
 ```toml
 # Notation.toml
@@ -84,8 +89,7 @@ secret = ""
 parent_page = "Your Notation Parent" # <----- this name
 ```
 
-### How do I get an API key from Notion?
-You need to create an integration in Notion.
+Now you need to create an integration in Notion.
 
 Go to `Settings & members` in the top right of your Notion home.
 
@@ -115,3 +119,5 @@ And throw it in your `Notation.toml`!
 secret = "your_new_integration_secret" # <----- right here
 parent_page = "Your Notation Parent"
 ```
+
+Last thing, you need to connect your Notion page to this integration.
