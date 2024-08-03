@@ -24,7 +24,6 @@ jobs:
         run: rustup target add x86_64-unknown-linux-gnu
 
       - name: Build for ${{ matrix.target }}
-        uses: actions-rust-lang/setup-rust-toolchain@v1
         run: cargo build --release --target ${{ matrix.target }}
 
       - name: Upload Release Asset
