@@ -45,7 +45,7 @@ The website you're reading right now is managed by Notation.
 1. Write your documentation in markdown.
 2. Create a Notion page to host your documentation.
 3. Grab an API key from Notion (help below)
-4. Throw that API key in a `~/Notation.toml` file (detail below)
+4. Throw that API key in a `~/.notation/Notation.toml` file (detail below)
 5. Run `notation ship --src </path/to/you/docs>`
 6. See your documentation in Notion. Use built-in AI search, nice formatting, table on contents on the right, etc
 
