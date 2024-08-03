@@ -16,11 +16,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Rust
-        uses: actions/setup-rust@v1
-        with:
-          rust-version: 'stable'
-
       - name: Install target for aarch64-apple-darwin
         run: rustup target add aarch64-apple-darwin
 
