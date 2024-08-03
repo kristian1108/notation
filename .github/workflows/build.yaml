@@ -16,5 +16,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Install target for aarch64-apple-darwin
+        run: rustup target add aarch64-apple-darwin
+
       - name: Build
-        run: cargo build --release
+        run: cargo build --release --target aarch64-apple-darwin
