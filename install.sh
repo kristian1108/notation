@@ -19,13 +19,18 @@ create_notation_toml() {
   local notation_dir="$1"
   local toml_file="${notation_dir}/Notation.toml"
 
-  cat <<EOL > "${toml_file}"
+  if [ ! -f "${toml_file}" ]; then
+    cat <<EOL > "${toml_file}"
 [notion]
 # this is the notation secret from your installed connection
 secret = ""
 # this is the title of the page that will host your new documentation
 parent_page = ""
 EOL
+    echo "Created Notation.toml in ${notation_dir}"
+  else
+    echo "Notation.toml already exists in ${notation_dir}"
+  fi
 }
 
 get_latest_release() {
