@@ -6,7 +6,7 @@
 curl -sSL https://github.com/kristian1108/notation/raw/master/install.sh | bash
 ```
 
-Once the binary is there, you can edit the config at ~/.notation/Notation.toml
+Once the binary is there, you can edit the config at `~/.notation/Notation.toml` (more detail below).
 
 # Design Philosophy
 
@@ -39,7 +39,8 @@ Once it's in Notion, it can be an internal thing, or you can ship it as a public
 You also get all of Notion's AI, search, and formatting for free.
 
 # Example
-The website you're reading right now is managed by Notation.
+The website you're reading right now is managed by Notation. Here's the [source
+Markdown](https://github.com/kristian1108/notation/blob/master/docs/intro.md).
 
 # Usage
 1. Write your documentation in markdown.
@@ -47,11 +48,11 @@ The website you're reading right now is managed by Notation.
 3. Grab an API key from Notion (help below)
 4. Throw that API key in a `~/.notation/Notation.toml` file (detail below)
 5. Run `notation ship --src </path/to/you/docs>`
-6. See your documentation in Notion. Use built-in AI search, nice formatting, table on contents on the right, etc
+6. See your documentation in Notion. Use built-in AI search, nice formatting, table of contents, etc
 
-# Deployment
-1. Keep your documentation internal to your own Notion workspace for your team.
-2. Ship it as a Notion page [like this](https://private-marmot-67c.notion.site/Notation-2e4180aa275f43f5bd0ef5169cf3ccdc).
+# Deployment Options
+1. Keep your documentation internal to your own Notion workspace for your team, OR
+2. Ship it as a Notion page [like this](https://private-marmot-67c.notion.site/Notation-2e4180aa275f43f5bd0ef5169cf3ccdc), OR
 3. Deploy it as a full-on website with [super.so](https://super.so), for example: [notation.so](https://notation.so).
 
 # FAQ
@@ -70,7 +71,7 @@ The website you're reading right now is managed by Notation.
 Create a `Notation.toml` file alongside the notation binary (usually in `~/.notation/`).
 
 ```toml
-# Notation.toml
+# ~/.notation/Notation.toml
 
 [notion]
 secret = ""
