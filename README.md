@@ -1,3 +1,5 @@
 # Hi 👋 Welcome to Notation
 
-Please have a look at: https://notation.so for more information.
+![](https://notation-media.s3.amazonaws.com/demo.gif)
+
+# For more info, see https://notation.so.
