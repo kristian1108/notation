@@ -55,6 +55,49 @@ Markdown](https://github.com/kristian1108/notation/blob/master/docs/intro.md).
 2. Ship it as a Notion page [like this](https://private-marmot-67c.notion.site/Notation-2e4180aa275f43f5bd0ef5169cf3ccdc), OR
 3. Deploy it as a full-on website with [super.so](https://super.so), for example: [notation.so](https://notation.so).
 
+# A Little Sugar
+There are a few nice extras that Notation provides:
+
+### 1 — intro.md
+If you want to ship content to the parent page directly, you can
+put it in an `intro.md` file in the directory. Instead of creating a subpage
+for this content, it will display directly on the parent.
+
+For example, consider this file structure:
+
+```text
+docs/
+  intro.md
+  getting_started.md
+  api/
+    endpoints.md
+```
+
+This will get rendered in Notion as:
+
+```text
+Parent Page
+  ... whatever content is in intro.md ...  
+  - Getting Started (Subpage)
+  - API (Subpage)
+    - Endpoints (Subpage)
+```
+
+### 2 — arguments
+Notation supports these arguments passed as CLI flags at the top of your Markdown file:
+
+1. `title` - the title of the page in Notion
+2. `emoji` - the page icon in Notion
+
+For example:
+
+```text
+--title "Getting Started" --emoji 🚀
+
+# My Title of my markdown file
+My content that will be rendered on a page titled "Get Started" with the rocket emoji.
+```
+
 # FAQ
 ### What markdown features do you support?
 - headers
