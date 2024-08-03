@@ -1,3 +1,13 @@
+# Hi, this is Notation 👋
+![](https://notation-media.s3.amazonaws.com/demo.gif)
+
+# Install to ~/.notation
+```shell
+curl -sSL https://github.com/kristian1108/notation/raw/master/install.sh | bash
+```
+
+Once the binary is there, you can edit the config at ~/.notation/Notation.toml
+
 # Design Philosophy
 
 ### 1 — Documentation should not be managed separately from the repo.
@@ -35,7 +45,7 @@ The website you're reading right now is managed by Notation.
 1. Write your documentation in markdown.
 2. Create a Notion page to host your documentation.
 3. Grab an API key from Notion (help below)
-4. Throw that API key in a `Notation.toml` file (detail below)
+4. Throw that API key in a `~/Notation.toml` file (detail below)
 5. Run `notation ship --src </path/to/you/docs>`
 6. See your documentation in Notion. Use built-in AI search, nice formatting, table on contents on the right, etc
 
@@ -57,7 +67,7 @@ The website you're reading right now is managed by Notation.
 - arbitrary directory structure (will turn into subpages, subsubpages, etc.)
 
 ### How do I configure Notation?
-Create a `Notation.toml` file in the root of your project.
+Create a `Notation.toml` file alongside the notation binary (usually in `~/.notation/`).
 
 ```toml
 # Notation.toml
@@ -121,3 +131,14 @@ parent_page = "Your Notation Parent"
 ```
 
 Last thing, you need to connect your Notion page to this integration.
+
+Back on your parent Notion page, click the three dots in the top right corner, and
+then go down to `Connections`, find your new Notion integration, and click it.
+
+![](https://notation-media.s3.amazonaws.com/connect_to_page.jpg)
+
+That's it! Enjoy!
+
+# Help
+If you have any questions, feel free to create an issue in the [Github](https://github.com/kristian1108/notation).
+I'll be actively monitoring. Thanks :)
