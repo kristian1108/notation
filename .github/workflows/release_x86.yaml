@@ -7,34 +7,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        target:
-          - x86_64-unknown-linux-gnu
-          - aarch64-apple-darwin
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install target for aarch64-apple-darwin
-        run: rustup target add aarch64-apple-darwin
-
       - name: Install target for x86_64-unknown-linux-gnu
         run: rustup target add x86_64-unknown-linux-gnu
 
-      - name: Update Rust
-        run: rustup update
-
-      - name: Build for ${{ matrix.target }}
-        run: cargo build --release --target ${{ matrix.target }}
+      - name: Build for x86_64-unknown-linux-gnu
+        run: cargo build --release --target x86_64-unknown-linux-gnu
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: target/${{ matrix.target }}/release/notation
-          asset_name: notation-${{ matrix.target }}
+          asset_path: target/x86_64-unknown-linux-gnu/release/notation
+          asset_name: notation-x86_64
           asset_content_type: application/octet-stream
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

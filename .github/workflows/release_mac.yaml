@@ -1,0 +1,29 @@
+name: Build and Release Rust Binaries
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install target for aarch64-apple-darwin
+        run: rustup target add aarch64-apple-darwin
+
+      - name: Build for aarch64-apple-darwin
+        run: cargo build --release --target aarch64-apple-darwin
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: target/x86_64-unknown-linux-gnu/release/notation
+          asset_name: notation-aarch64-darwin
+          asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
